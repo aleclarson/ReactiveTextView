@@ -1,0 +1,12 @@
+{
+  "name": "ReactiveTextView",
+  "version": "1.0.0",
+  "main": "./js/src/ReactiveTextView.js",
+  "dependencies": {
+    "component": "aleclarson/component#1.0.0",
+    "objectify": "aleclarson/objectify#1.0.0",
+    "reaction": "aleclarson/reaction#1.0.0",
+    "reactive-getter": "aleclarson/reactive-getter#1.0.0",
+    "type-utils": "aleclarson/type-utils#1.0.0"
+  }
+}
