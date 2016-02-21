@@ -4,7 +4,7 @@ ref = require("component"), React = ref.React, Style = ref.Style, TextView = ref
 
 ref1 = require("type-utils"), Void = ref1.Void, assert = ref1.assert;
 
-ReactiveGetter = require("reactive-getter");
+ReactiveGetter = require("ReactiveGetter");
 
 styleDiffer = require("styleDiffer");
 
@@ -30,11 +30,9 @@ module.exports = Component("ReactiveTextView", {
     };
   },
   componentDidMount: function() {
-    return this.text.addListener((function(_this) {
+    return this.text.addListener("didSet", (function(_this) {
       return function(event) {
-        if (event === "didSet") {
-          return _this.forceUpdate();
-        }
+        return _this.forceUpdate();
       };
     })(this));
   },

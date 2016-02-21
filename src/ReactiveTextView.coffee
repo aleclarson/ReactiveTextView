@@ -8,7 +8,7 @@
 { Void
   assert } = require "type-utils"
 
-ReactiveGetter = require "reactive-getter"
+ReactiveGetter = require "ReactiveGetter"
 styleDiffer = require "styleDiffer"
 objectify = require "objectify"
 Reaction = require "reaction"
@@ -30,8 +30,8 @@ module.exports = Component "ReactiveTextView",
     text: @props.getText or @props.text.getValue
 
   componentDidMount: ->
-    @text.addListener (event) =>
-      @forceUpdate() if event is "didSet"
+    @text.addListener "didSet", (event) =>
+      @forceUpdate()
 
   shouldComponentUpdate: (props) ->
     styleDiffer props.style, @props.style
