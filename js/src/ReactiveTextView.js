@@ -44,7 +44,7 @@ module.exports = Component("ReactiveTextView", {
       children: this.text.value || "",
       mixins: [
         objectify({
-          keys: React.Text.propTypes,
+          keys: TextView.propTypes,
           values: this.props
         })
       ]
