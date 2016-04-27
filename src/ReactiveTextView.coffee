@@ -17,21 +17,20 @@ module.exports = Component "ReactiveTextView",
 
   propTypes:
     text: [ NativeValue, Void ]
-    getText: [ ReactiveGetter, Void ]
+    getText: [ Function.Kind, Void ]
     style: Style
 
   initProps: (props) ->
-    assert props.getText or props.text,
-      reason: "Either 'text' or 'getText' must be defined!"
-      component: this
+    assert props.text? or props.getText?, "Either 'text' or 'getText' must be defined in 'props'!"
 
   initNativeValues: ->
 
-    text: @props.getText or @props.text.getValue
+    text: if @props.text? then @props.text else ReactiveGetter @props.getText
 
-  componentDidMount: ->
-    @text.addListener "didSet", (event) =>
-      @forceUpdate()
+  initListeners: ->
+
+    @text.didSet =>
+      try @forceUpdate()
 
   shouldComponentUpdate: (props) ->
     styleDiffer props.style, @props.style

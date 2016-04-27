@@ -15,24 +15,23 @@ Reaction = require("reaction");
 module.exports = Component("ReactiveTextView", {
   propTypes: {
     text: [NativeValue, Void],
-    getText: [ReactiveGetter, Void],
+    getText: [Function.Kind, Void],
     style: Style
   },
   initProps: function(props) {
-    return assert(props.getText || props.text, {
-      reason: "Either 'text' or 'getText' must be defined!",
-      component: this
-    });
+    return assert((props.text != null) || (props.getText != null), "Either 'text' or 'getText' must be defined in 'props'!");
   },
   initNativeValues: function() {
     return {
-      text: this.props.getText || this.props.text.getValue
+      text: this.props.text != null ? this.props.text : ReactiveGetter(this.props.getText)
     };
   },
-  componentDidMount: function() {
-    return this.text.addListener("didSet", (function(_this) {
-      return function(event) {
-        return _this.forceUpdate();
+  initListeners: function() {
+    return this.text.didSet((function(_this) {
+      return function() {
+        try {
+          return _this.forceUpdate();
+        } catch (_error) {}
       };
     })(this));
   },
