@@ -1,54 +1,57 @@
-var Component, NativeValue, React, Reaction, ReactiveGetter, Style, TextView, Void, assert, objectify, ref, ref1, styleDiffer;
+var Component, Maybe, NativeValue, ReactiveGetter, Style, TextView, assert, objectify, ref, type;
 
-ref = require("component"), React = ref.React, Style = ref.Style, TextView = ref.TextView, Component = ref.Component, NativeValue = ref.NativeValue;
-
-ref1 = require("type-utils"), Void = ref1.Void, assert = ref1.assert;
+ref = require("component"), Style = ref.Style, TextView = ref.TextView, Component = ref.Component, NativeValue = ref.NativeValue;
 
 ReactiveGetter = require("ReactiveGetter");
 
-styleDiffer = require("styleDiffer");
-
 objectify = require("objectify");
 
-Reaction = require("reaction");
+assert = require("assert");
 
-module.exports = Component("ReactiveTextView", {
-  propTypes: {
-    text: [NativeValue, Void],
-    getText: [Function.Kind, Void],
-    style: Style
-  },
-  initProps: function(props) {
-    return assert((props.text != null) || (props.getText != null), "Either 'text' or 'getText' must be defined in 'props'!");
-  },
-  initNativeValues: function() {
+Maybe = require("Maybe");
+
+type = Component("ReactiveTextView");
+
+type.propTypes = {
+  text: NativeValue.Maybe,
+  getText: Maybe(Function.Kind),
+  style: Style
+};
+
+type.initProps(function(props) {
+  return assert((props.text != null) || (props.getText != null), function() {
     return {
-      text: this.props.text != null ? this.props.text : ReactiveGetter(this.props.getText)
+      reason: "Either 'text' or 'getText' must be defined in 'props'!"
     };
-  },
-  initListeners: function() {
-    return this.text.didSet((function(_this) {
-      return function() {
-        try {
-          return _this.forceUpdate();
-        } catch (_error) {}
-      };
-    })(this));
-  },
-  shouldComponentUpdate: function(props) {
-    return styleDiffer(props.style, this.props.style);
-  },
-  render: function() {
-    return TextView({
-      children: this.text.value || "",
-      mixins: [
-        objectify({
-          keys: TextView.propTypes,
-          values: this.props
-        })
-      ]
-    });
+  });
+});
+
+type.defineNativeValues({
+  text: function() {
+    return this.props.text || ReactiveGetter(this.props.getText);
   }
 });
+
+type.createListeners(function() {
+  return this.text.didSet((function(_this) {
+    return function() {
+      try {
+        return _this.forceUpdate();
+      } catch (error) {}
+    };
+  })(this));
+});
+
+type.render(function() {
+  var props;
+  props = objectify({
+    keys: TextView.propTypes,
+    values: this.props
+  });
+  props.children = this.text.value || "";
+  return TextView(props);
+});
+
+module.exports = type.build();
 
 //# sourceMappingURL=../../map/src/ReactiveTextView.map

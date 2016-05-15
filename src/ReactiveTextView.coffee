@@ -1,45 +1,44 @@
 
-{ React
-  Style
+{ Style
   TextView
   Component
   NativeValue } = require "component"
 
-{ Void
-  assert } = require "type-utils"
-
 ReactiveGetter = require "ReactiveGetter"
-styleDiffer = require "styleDiffer"
 objectify = require "objectify"
-Reaction = require "reaction"
+assert = require "assert"
+Maybe = require "Maybe"
 
-module.exports = Component "ReactiveTextView",
+type = Component "ReactiveTextView"
 
-  propTypes:
-    text: [ NativeValue, Void ]
-    getText: [ Function.Kind, Void ]
-    style: Style
+type.propTypes =
+  text: NativeValue.Maybe
+  getText: Maybe(Function.Kind)
+  style: Style
 
-  initProps: (props) ->
-    assert props.text? or props.getText?, "Either 'text' or 'getText' must be defined in 'props'!"
+type.initProps (props) ->
+  assert props.text? or props.getText?, ->
+    reason: "Either 'text' or 'getText' must be defined in 'props'!"
 
-  initNativeValues: ->
+type.defineNativeValues
 
-    text: if @props.text? then @props.text else ReactiveGetter @props.getText
+  text: ->
+    @props.text or
+    ReactiveGetter @props.getText
 
-  initListeners: ->
+type.createListeners ->
 
-    @text.didSet =>
-      try @forceUpdate()
+  @text.didSet =>
+    try @forceUpdate()
 
-  shouldComponentUpdate: (props) ->
-    styleDiffer props.style, @props.style
+type.render ->
 
-  render: ->
-    return TextView
-      children: @text.value or ""
-      mixins: [
-        objectify
-          keys: TextView.propTypes
-          values: @props
-      ]
+  props = objectify
+    keys: TextView.propTypes
+    values: @props
+
+  props.children = @text.value or ""
+
+  TextView props
+
+module.exports = type.build()
