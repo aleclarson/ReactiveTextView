@@ -26,7 +26,7 @@ type.defineNativeValues
     @props.text or
     ReactiveGetter @props.getText
 
-type.createListeners ->
+type.defineListeners ->
 
   @text.didSet =>
     try @forceUpdate()

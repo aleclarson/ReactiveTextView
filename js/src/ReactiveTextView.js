@@ -32,7 +32,7 @@ type.defineNativeValues({
   }
 });
 
-type.createListeners(function() {
+type.defineListeners(function() {
   return this.text.didSet((function(_this) {
     return function() {
       try {
