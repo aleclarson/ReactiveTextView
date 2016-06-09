@@ -20,6 +20,12 @@ type.initProps (props) ->
   assert props.text? or props.getText?, ->
     reason: "Either 'text' or 'getText' must be defined in 'props'!"
 
+type.defineValues
+
+  textProps: -> objectify
+    keys: TextView.propTypes
+    values: @props
+
 type.defineNativeValues
 
   text: ->
@@ -32,13 +38,6 @@ type.defineListeners ->
     try @forceUpdate()
 
 type.render ->
-
-  props = objectify
-    keys: TextView.propTypes
-    values: @props
-
-  props.children = @text.value or ""
-
-  TextView props
+  TextView @textProps, @text.value or ""
 
 module.exports = type.build()

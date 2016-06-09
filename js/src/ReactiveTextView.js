@@ -26,6 +26,15 @@ type.initProps(function(props) {
   });
 });
 
+type.defineValues({
+  textProps: function() {
+    return objectify({
+      keys: TextView.propTypes,
+      values: this.props
+    });
+  }
+});
+
 type.defineNativeValues({
   text: function() {
     return this.props.text || ReactiveGetter(this.props.getText);
@@ -43,13 +52,7 @@ type.defineListeners(function() {
 });
 
 type.render(function() {
-  var props;
-  props = objectify({
-    keys: TextView.propTypes,
-    values: this.props
-  });
-  props.children = this.text.value || "";
-  return TextView(props);
+  return TextView(this.textProps, this.text.value || "");
 });
 
 module.exports = type.build();
