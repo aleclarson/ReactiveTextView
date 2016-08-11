@@ -1,8 +1,7 @@
 
-{ Style
-  TextView
-  Component
-  NativeValue } = require "component"
+{Component, Style} = require "modx"
+{NativeValue} = require "modx/native"
+{TextView} = require "modx/views"
 
 ReactiveGetter = require "ReactiveGetter"
 objectify = require "objectify"

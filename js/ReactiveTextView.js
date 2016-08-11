@@ -1,6 +1,10 @@
 var Component, Maybe, NativeValue, ReactiveGetter, Style, TextView, assert, objectify, ref, type;
 
-ref = require("component"), Style = ref.Style, TextView = ref.TextView, Component = ref.Component, NativeValue = ref.NativeValue;
+ref = require("modx"), Component = ref.Component, Style = ref.Style;
+
+NativeValue = require("modx/native").NativeValue;
+
+TextView = require("modx/views").TextView;
 
 ReactiveGetter = require("ReactiveGetter");
 
@@ -57,4 +61,4 @@ type.render(function() {
 
 module.exports = type.build();
 
-//# sourceMappingURL=../../map/src/ReactiveTextView.map
+//# sourceMappingURL=map/ReactiveTextView.map
