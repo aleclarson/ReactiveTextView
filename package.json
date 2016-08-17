@@ -3,9 +3,7 @@
   "version": "1.0.0",
   "main": "js/ReactiveTextView",
   "dependencies": {
-    "Maybe": "aleclarson/Maybe#1.0.0",
     "ReactiveGetter": "aleclarson/ReactiveGetter#1.0.0",
-    "assert": "aleclarson/assert#1.0.0",
     "modx": "aleclarson/modx#1.0.0",
     "objectify": "aleclarson/objectify#1.0.0"
   },

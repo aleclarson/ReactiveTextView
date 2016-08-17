@@ -5,19 +5,17 @@
 
 ReactiveGetter = require "ReactiveGetter"
 objectify = require "objectify"
-assert = require "assert"
-Maybe = require "Maybe"
 
 type = Component "ReactiveTextView"
 
-type.propTypes =
-  text: NativeValue.Maybe
-  getText: Maybe(Function.Kind)
+type.defineProps
+  text: NativeValue
+  getText: Function.Kind
   style: Style
 
 type.initProps (props) ->
-  assert props.text? or props.getText?, ->
-    reason: "Either 'text' or 'getText' must be defined in 'props'!"
+  unless props.text? or props.getText?
+    throw Error "Either 'text' or 'getText' must be defined in 'props'!"
 
 type.defineValues
 

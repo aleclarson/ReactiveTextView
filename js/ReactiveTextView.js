@@ -1,4 +1,4 @@
-var Component, Maybe, NativeValue, ReactiveGetter, Style, TextView, assert, objectify, ref, type;
+var Component, NativeValue, ReactiveGetter, Style, TextView, objectify, ref, type;
 
 ref = require("modx"), Component = ref.Component, Style = ref.Style;
 
@@ -10,24 +10,18 @@ ReactiveGetter = require("ReactiveGetter");
 
 objectify = require("objectify");
 
-assert = require("assert");
-
-Maybe = require("Maybe");
-
 type = Component("ReactiveTextView");
 
-type.propTypes = {
-  text: NativeValue.Maybe,
-  getText: Maybe(Function.Kind),
+type.defineProps({
+  text: NativeValue,
+  getText: Function.Kind,
   style: Style
-};
+});
 
 type.initProps(function(props) {
-  return assert((props.text != null) || (props.getText != null), function() {
-    return {
-      reason: "Either 'text' or 'getText' must be defined in 'props'!"
-    };
-  });
+  if (!((props.text != null) || (props.getText != null))) {
+    throw Error("Either 'text' or 'getText' must be defined in 'props'!");
+  }
 });
 
 type.defineValues({
