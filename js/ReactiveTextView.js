@@ -33,10 +33,10 @@ type.defineValues({
   }
 });
 
-type.defineNativeValues({
-  text: function() {
-    return this.props.text || ReactiveGetter(this.props.getText);
-  }
+type.defineNativeValues(function() {
+  return {
+    text: this.props.text || ReactiveGetter(this.props.getText)
+  };
 });
 
 type.defineListeners(function() {

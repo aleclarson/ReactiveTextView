@@ -23,10 +23,9 @@ type.defineValues
     keys: TextView.propTypes
     values: @props
 
-type.defineNativeValues
+type.defineNativeValues ->
 
-  text: ->
-    @props.text or
+  text: @props.text or
     ReactiveGetter @props.getText
 
 type.defineListeners ->
