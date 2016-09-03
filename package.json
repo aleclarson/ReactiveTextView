@@ -3,7 +3,6 @@
   "version": "1.0.0",
   "main": "js/ReactiveTextView",
   "dependencies": {
-    "ReactiveGetter": "aleclarson/ReactiveGetter#1.0.0",
     "modx": "aleclarson/modx#1.0.0",
     "objectify": "aleclarson/objectify#1.0.0"
   },

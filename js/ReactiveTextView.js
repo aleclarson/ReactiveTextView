@@ -1,4 +1,4 @@
-var Component, NativeValue, ReactiveGetter, Style, TextView, objectify, ref, type;
+var Component, NativeValue, Style, TextView, objectify, ref, type;
 
 ref = require("modx"), Component = ref.Component, Style = ref.Style;
 
@@ -6,15 +6,13 @@ NativeValue = require("modx/native").NativeValue;
 
 TextView = require("modx/views").TextView;
 
-ReactiveGetter = require("ReactiveGetter");
-
 objectify = require("objectify");
 
 type = Component("ReactiveTextView");
 
 type.defineProps({
   text: NativeValue,
-  getText: Function.Kind,
+  getText: Function,
   style: Style
 });
 
@@ -39,7 +37,7 @@ type.defineNativeValues(function() {
   };
 });
 
-type.defineListeners(function() {
+type.defineMountedListeners(function() {
   return this.text.didSet((function(_this) {
     return function() {
       try {

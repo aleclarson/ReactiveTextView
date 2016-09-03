@@ -3,14 +3,13 @@
 {NativeValue} = require "modx/native"
 {TextView} = require "modx/views"
 
-ReactiveGetter = require "ReactiveGetter"
 objectify = require "objectify"
 
 type = Component "ReactiveTextView"
 
 type.defineProps
   text: NativeValue
-  getText: Function.Kind
+  getText: Function
   style: Style
 
 type.initProps (props) ->
@@ -28,7 +27,7 @@ type.defineNativeValues ->
   text: @props.text or
     ReactiveGetter @props.getText
 
-type.defineListeners ->
+type.defineMountedListeners ->
 
   @text.didSet =>
     try @forceUpdate()
