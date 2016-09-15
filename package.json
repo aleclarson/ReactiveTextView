@@ -2,13 +2,19 @@
   "name": "ReactiveTextView",
   "version": "1.0.0",
   "main": "js/ReactiveTextView",
+  "plugins": [
+    "lotus-coffee"
+  ],
+  "scripts": {
+    "build": "coffee -cb -o js src",
+    "postinstall": "postinstall-build js 'npm run build'"
+  },
   "dependencies": {
     "modx": "aleclarson/modx#1.0.0",
-    "objectify": "aleclarson/objectify#1.0.0"
+    "objectify": "aleclarson/objectify#1.0.0",
+    "postinstall-build": "0.2.x"
   },
-  "lotus": {
-    "plugins": [
-      "lotus-coffee"
-    ]
+  "devDependencies": {
+    "coffee-script": "1.9.x"
   }
 }
