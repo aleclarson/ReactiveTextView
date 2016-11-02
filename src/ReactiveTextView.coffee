@@ -1,6 +1,5 @@
 
 {Component, Style} = require "modx"
-{NativeValue} = require "modx/native"
 {TextView} = require "modx/views"
 
 objectify = require "objectify"
@@ -8,13 +7,8 @@ objectify = require "objectify"
 type = Component "ReactiveTextView"
 
 type.defineProps
-  text: NativeValue
-  getText: Function
+  text: Function.isRequired
   style: Style
-
-type.initProps (props) ->
-  unless props.text? or props.getText?
-    throw Error "Either 'text' or 'getText' must be defined in 'props'!"
 
 type.defineValues
 
@@ -24,10 +18,9 @@ type.defineValues
 
 type.defineNativeValues ->
 
-  text: @props.text or
-    ReactiveGetter @props.getText
+  text: @props.text
 
-type.defineMountedListeners ->
+type.defineListeners ->
 
   @text.didSet =>
     try @forceUpdate()
